@@ -6,6 +6,7 @@ This repository contains basic programming problems that i practice during my co
 ## language used
 -Python
 -C++
+-C
 ## purpose
 -Strengthen programming fundamentals
 -Improve logical thinking
