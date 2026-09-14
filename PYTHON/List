@@ -1,0 +1,18 @@
+# creating  an empty list
+emptylist=[]
+print("Empty list is:",emptylist)
+# Creating a list with elements
+my_list=[10,507,"python"]
+# Inserting new elements using append()
+my_list.append(20)
+my_list.append("program")
+my_list.append(6.5)
+print("List aftr adding elements", my_list)
+# Deleting elements from list
+d1=my_list.pop()
+d2=my_list.pop(2)
+my_list.remove(507)
+print("my list after deleting the elements",my_list)
+# Removing the entire list
+my_list.clear()
+print("my_list after removing all the elements",my_list)
