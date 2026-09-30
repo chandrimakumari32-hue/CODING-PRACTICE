@@ -1,0 +1,140 @@
+//BST
+#include<stdio.h>
+#include<stdlib.h>
+struct Node
+{
+	struct Node *lc;
+	int data;
+	struct Node *rc;
+};
+struct Node *root=NULL;
+void insert(struct Node **,int);
+void inorder(struct Node *);
+void preorder(struct Node *);
+void postorder(struct Node *);
+struct Node *search(struct Node *,int);
+void del(struct Node **,int);
+int main()
+{
+	insert(&root,45);
+	insert(&root,36);
+	insert(&root,54);
+	insert(&root,27);
+	insert(&root,63);
+	insert(&root,72);
+	insert(&root,61);
+	insert(&root,18);
+	printf("Inorder traversal: \n");
+	inorder(root);
+	printf("\nPreorder traversal: \n");
+	preorder(root);
+	printf("\nPostorder traversal: \n");
+	postorder(root);
+	int value = 10;
+	struct Node *found = search(root,value);
+	if(found != NULL)
+		printf("\n%d found in tree.\n",value);
+	else
+		printf("\n%d not found in tree.\n",value);
+	// Delete a value from the tree
+	del(&root,36);
+	printf("Inorder traversal after deleting 36: \n");
+	inorder(root);              
+	return 0;
+}
+void insert(struct Node **q,int item)
+{
+	struct Node *p;
+	p = malloc(sizeof(struct Node));
+	p->lc = NULL;
+	p->data = item;
+	p->rc = NULL;
+	
+	if(*q == NULL)
+	{
+		*q = p;
+		return;
+	}
+	else if((*q)->data > item)
+		insert(&(*q)->lc,item);
+	else
+		insert(&(*q)->rc,item);
+}
+void inorder(struct Node *q)
+{
+	if(q!=NULL)
+	{
+		inorder(q->lc);
+		printf("%d ",q->data);
+		inorder(q->rc);
+	}
+}
+void preorder(struct Node *q)
+{
+	if(q!=NULL)
+	{
+		printf("%d ",q->data);
+		inorder(q->lc);
+		inorder(q->rc);
+	}
+}
+void postorder(struct Node *q)
+{
+	if(q!=NULL)
+	{
+		inorder(q->lc);
+		inorder(q->rc);
+		printf("%d ",q->data);
+	}
+}
+struct Node *search(struct Node *q,int item)
+{
+	if(q == NULL)
+		return NULL;
+	else if(q->data == item)
+		return q;
+	else if(q->data > item)
+		return search(q->lc,item);
+	else
+		return search(q->rc,item);
+}
+// Recursively delete 'item' from the BST rooted at *q
+void del(struct Node **q,int item)
+{
+	struct Node *temp,*succ;
+ 
+	if(*q == NULL) // reached end without finding item
+	{
+		printf("Item not found.\n");   
+		return;
+	}
+ 
+	if((*q)->data > item)
+		del(&(*q)->lc,item);        // item is smaller, search left subtree
+	else if((*q)->data < item)
+		del(&(*q)->rc,item);        // item is larger, search right subtree
+	else
+	{
+		// item found at this node, remove it
+		temp = *q;
+ 		if(temp->lc == NULL) // *no left child, replace node with its right child*
+		{			
+			*q = temp->rc;
+			free(temp);
+		}
+		else if(temp->rc == NULL) // *no right child, replace node with its left child*
+		{			
+			*q = temp->lc;
+			free(temp);
+		}
+		else
+		{
+			// *two children, find inorder successor(smallest value in the right subtree)*
+			succ = temp->rc;
+			while(succ->lc != NULL)
+				succ = succ->lc;
+ 			temp->data = succ->data;      // *copy successor's value into this node*
+ 			del(&temp->rc,succ->data);    // *delete the successor node from right subtree*
+		}
+	}
+}
