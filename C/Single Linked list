@@ -1,0 +1,88 @@
+// Single Linked list
+#include<stdio.h>
+#include<stdlib.h>
+void insertatend(int item);
+void insertinbet(int item) ;
+void insertinbeg(int item);
+void display();
+struct node{
+    int data;
+    struct node * next;
+};
+int main(){
+     insertatend(10);
+     insertatend(20);
+     insertatend(30);
+     insertatend(40);
+     insertatend(50);
+     insertatend(70);
+    display();
+    insertinbeg(5);
+    display();
+    insertinbet(45);
+    display();
+    insertinbet(60);
+    display();
+    return 0;
+}
+struct node * start=NULL;
+void insertatend(int item){
+    struct node *p;
+    p=malloc(sizeof(struct node));
+    p->data=item;
+    p->next=NULL;
+
+    if(start==NULL){
+        start=p;
+    }
+    else{
+        struct node *q;
+        q=start;
+        while(q->next!=NULL){
+           q=q->next;
+        }
+    
+    q->next=p;  
+    }
+}
+void insertinbeg(int item){
+    struct node *p;
+    p=malloc(sizeof(struct node));
+    p->data=item;
+    p->next=NULL;
+    if (start==NULL){
+        start=p;  
+    }
+    else{
+        p->next=start;
+        start=p;
+    }
+}
+void insertinbet(int item){
+
+    struct node *p;
+    p=malloc(sizeof(struct node));
+    p->data=item;
+    p->next=NULL;
+    int data;
+    printf("\n Enter the itemm after which to insert");
+    scanf("%d",&data);
+    struct node *q;
+    q=start;
+    while(q->data!=data ){
+        q=q->next;
+    }
+    p->next=q->next;
+    q->next=p;       
+}
+
+void display(){
+    struct node *q;
+    q=start;
+    while(q!=NULL){
+        printf("%d ",q->data);
+         q=q->next;
+    }
+    printf("\n");
+ 
+}
