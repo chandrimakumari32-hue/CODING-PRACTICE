@@ -4,6 +4,7 @@
 void insertatend(int item);
 void insertinbet(int item) ;
 void insertinbeg(int item);
+void delatbeg();
 void display();
 struct node{
     int data;
@@ -23,6 +24,7 @@ int main(){
     display();
     insertinbet(60);
     display();
+    delatbeg();
     return 0;
 }
 struct node * start=NULL;
@@ -85,4 +87,16 @@ void display(){
     }
     printf("\n");
  
+}
+void delatbeg(){
+  struct node *q;
+    q=start;
+    if(q==NULL){
+        printf("List is empty");
+    }
+    else{
+    start=start->next;
+    q->next=NULL;
+    printf("Deleted node is %d",q->data);
+    free(q);}
 }
