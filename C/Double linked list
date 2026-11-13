@@ -1,0 +1,99 @@
+// Double linked list
+#include <stdio.h>
+#include <stdlib.h>
+void insertatend(int item);
+void insertatbeg(int item);
+void insertinbet(int item,int pos);
+void Display();
+int main() {
+
+    insertatend(10);
+    insertatend(20);
+    insertatend(30);
+    insertatend(40);
+    insertatend(50);
+    Display();
+    insertatbeg(5);
+    Display();
+    insertinbet(55,50);
+    Display();
+    return 0;
+}
+
+struct node {
+    int data;
+    struct node *next;
+    struct node *prev;
+};
+struct node *start=NULL;
+void insertatend(int item){
+    struct node *p=malloc(sizeof(struct node));
+    p->data=item;
+    p->next=NULL;
+    p->prev=NULL;
+    if(start==NULL)
+    {
+        start=p;
+    }
+else{
+    struct node *q;
+    q=start;
+    while(q->next!=NULL){
+        q=q->next;
+    }
+    q->next=p;
+    p->prev=q;
+}}
+void insertatbeg(int item){
+    struct node *p=malloc(sizeof(struct node));
+    p->data=item;
+    p->next=NULL;
+    p->prev=NULL;
+    if(start==NULL){
+        start=p;
+    }
+    else{
+        p->next=start;
+        start->prev=p;
+        start=p;
+    }
+}
+void insertinbet(int item,int pos){
+    struct node *p=malloc(sizeof (struct node));
+    p->data=item;
+    p->next=NULL;
+    p->prev=NULL;
+    if(start==NULL){
+        start=p;
+    }
+    else{
+        struct node *q;
+        q=start;
+        while(q!=NULL){
+            if(q->data==pos){
+                p->next=q->next;
+                p->prev=q;
+                if(q->next!=NULL){
+                    q->next->prev=p;
+                }
+                q->next=p;
+                return;
+            }
+            else{
+                q=q->next;
+            }
+        }
+    }
+}
+void Display(){
+    struct node *q;
+    q=start;
+    while(q->next!=NULL){
+        q=q->next;
+    }
+    while(q!=NULL){
+        printf("%d ",q->data);
+        q=q->prev;
+    }
+    printf("\n");
+}
